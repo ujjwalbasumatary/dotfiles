@@ -29,7 +29,6 @@ exec --no-startup-id dex --autostart --environment i3
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
-
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 #exec --no-startup-id nm-applet
@@ -49,7 +48,7 @@ floating_modifier $mod
 tiling_drag modifier titlebar
 
 # gaps
-gaps inner 10px
+gaps inner 5px
 gaps outer 5px
 
 # start a terminal
@@ -77,6 +76,10 @@ bindsym Mod1+shift+c exec --no-startup-id maim -s | xclip -selection clipboard -
 
 bindsym $mod+shift+w exec --no-startup-id firefox
 
+bindsym Mod1+shift+l exec --no-startup-id i3lock
+#border pixel
+#default_border pixel 0
+#default_floating_border pixel 0
 # change focus
 bindsym $mod+h focus left
 bindsym $mod+j focus down
@@ -84,10 +87,10 @@ bindsym $mod+k focus up
 bindsym $mod+l focus right
 
 # alternatively, you can use the cursor keys:
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
+#bindsym $mod+Left focus left
+#bindsym $mod+Down focus down
+#bindsym $mod+Up focus up
+#bindsym $mod+Right focus right
 
 # move focused window
 bindsym $mod+Shift+j move left
@@ -219,7 +222,7 @@ bindsym $mod+r mode "resize"
 #	position top
         #status_command i3status
 #}
-
+#exec_always --no-startup-id picom &
 bindsym XF86MonBrightnessDown exec brightnessctl set 10%-
 bindsym XF86MonBrightnessUp exec brightnessctl set +10%
 
