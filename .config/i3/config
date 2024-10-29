@@ -68,18 +68,24 @@ bindsym $mod+d exec --no-startup-id rofi -show drun
 # .desktop file. It is a wrapper around dmenu, so you need that installed.
 # bindcode $mod+40 exec --no-startup-id i3-dmenu-desktop
 
-bindsym Mod1+shift+s exec --no-startup-id maim -s ~/screenshots/$(date -u +"%Y-%m-%dT%H:%M:%S%Z").png
-
+#main shortcuts for screenshots
+#save screenshot to /screenshots/
+bindsym Mod1+shift+s exec --no-startup-id maim ~/screenshots/$(date -u +"%Y-%m-%dT%H:%M:%S%Z").png
+#save current window to /screenshots/
 bindsym Mod1+shift+w exec --no-startup-id maim --window $(xdotool getactivewindow) ~/screenshots/$(date -u +"%Y-%m-%dT%H:%M:%S%Z").png
-
+#save current screen to clipboard
+bindsym Mod1+c exec --no-startup-id maim | xclip -selection clipboard -t image/png -i
+#save current screen to /screenshots/
 bindsym Mod1+shift+c exec --no-startup-id maim -s | xclip -selection clipboard -t image/png -i
 
+#open firefox
 bindsym $mod+shift+w exec --no-startup-id firefox
 
 bindsym Mod1+shift+l exec --no-startup-id i3lock
 #border pixel
 #default_border pixel 0
 #default_floating_border pixel 0
+
 # change focus
 bindsym $mod+h focus left
 bindsym $mod+j focus down
