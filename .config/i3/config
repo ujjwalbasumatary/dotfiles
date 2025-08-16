@@ -1,30 +1,3 @@
-set $rosewater #f5e0dc
-set $flamingo #f2cdcd
-set $pink #f5c2e7
-set $mauve #cba6f7
-set $red #f38ba8
-set $maroon #eba0ac
-set $peach #fab387
-set $yellow #f9e2af
-set $green #a6e3a1
-set $teal #94e2d5
-set $sky #89dceb
-set $sapphire #74c7ec
-set $blue #89b4fa
-set $lavender #b4befe
-set $text #cdd6f4
-set $subtext1 #bac2de
-set $subtext0 #a6adc8
-set $overlay2 #9399b2
-set $overlay1 #7f849c
-set $overlay0 #6c7086
-set $surface2 #585b70
-set $surface1 #45475a
-set $surface0 #313244
-set $base #1e1e2e
-set $mantle #181825
-set $crust #11111b
-
 set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -41,7 +14,7 @@ exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
-#exec --no-startup-id nm-applet
+# exec --no-startup-id nm-applet
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -72,11 +45,6 @@ bindsym $mod+t exec --no-startup-id rofi -show window
 
 # start rofi (a program launcher)
 bindsym $mod+d exec --no-startup-id rofi -show drun
-# A more modern dmenu replacement is rofi:
-# bindcode $mod+40 exec "rofi -modi drun,run -show drun"
-# There also is i3-dmenu-desktop which only displays applications shipping a
-# .desktop file. It is a wrapper around dmenu, so you need that installed.
-# bindcode $mod+40 exec --no-startup-id i3-dmenu-desktop
 
 #main shortcuts for screenshots
 #save screenshot to /screenshots/
@@ -86,13 +54,18 @@ bindsym Mod1+shift+w exec --no-startup-id maim --window $(xdotool getactivewindo
 #save current screen to clipboard and screenshots
 bindsym Mod1+shift+c exec --no-startup-id maim -s | xclip -selection clipboard -t image/png -i
 
-#open chrome 
+#open chrome
 bindsym $mod+shift+w exec --no-startup-id google-chrome-stable
 
+assign [class="Google-chrome"] 1
+assign [class="zoom"] 10
+assign [class="thunderbird"] 10
+assign [class="TelegramDesktop"] 9
+
+exec --no-startup-id zoom
+exec --no-startup-id thunderbird
+
 bindsym Mod1+shift+l exec --no-startup-id i3lock
-#border pixel
-#default_border pixel 0
-#default_floating_border pixel 0
 
 # change focus
 bindsym $mod+h focus left
@@ -174,9 +147,7 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-#ibindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
-
-bindsym $mod+Shift+e exit
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
 #open pycharm
 bindsym $mod+c exec bash /opt/pycharm-community-2024.2.3/bin/pycharm.sh
@@ -208,13 +179,8 @@ mode "resize" {
 
 default_border pixel 5
 
-# target                 title     bg    text   indicator  border
-client.focused           $lavender $base $text  $rosewater $lavender
-client.focused_inactive  $overlay0 $base $text  $rosewater $overlay0
-client.unfocused         $overlay0 $base $text  $rosewater $overlay0
-client.urgent            $peach    $base $peach $overlay0  $peach
-client.placeholder       $overlay0 $base $text  $overlay0  $overlay0
-client.background        $base
+include ./themes/catppuccin-mocha
+include ./colors.conf
 
 bindsym $mod+r mode "resize"
 
