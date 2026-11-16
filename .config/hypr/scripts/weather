@@ -35,6 +35,52 @@ CONDITIONS = {
 }
 
 
+def condition_icon(code, is_day):
+    """Lucide basename for a WMO condition, including day/night variants."""
+    if code in (0, 1):
+        return "sun" if is_day else "moon"
+    if code == 2:
+        return "cloud-sun" if is_day else "cloud-moon"
+    if code == 3:
+        return "cloud"
+    if code in (45, 48):
+        return "cloud-fog"
+    if code in (51, 53, 55):
+        return "cloud-drizzle"
+    if code in (56, 57, 66, 67):
+        return "cloud-hail"
+    if code in (61, 63, 65):
+        return "cloud-rain"
+    if code in (71, 73, 75, 77, 85, 86):
+        return "cloud-snow"
+    if code in (80, 81, 82):
+        return "cloud-sun-rain" if is_day else "cloud-moon-rain"
+    if code in (95, 96, 97, 99):
+        return "cloud-lightning"
+    return "cloud-off"
+
+
+def icon_path(data):
+    """Return the raster icon path used by Hyprlock's image widget."""
+    name = condition_icon(data["code"], data["is_day"]) if data else "cloud-off"
+    root = Path(os.environ.get("XDG_CONFIG_HOME", Path.home() / ".config"))
+    return str((root / "waybar/icons/lucide/weather" / (name + ".png")).expanduser().resolve())
+
+
+def update_icon_cache(data):
+    """Keep Hyprlock's initial image current without exposing a partial link."""
+    try:
+        CACHE.mkdir(parents=True, mode=0o700, exist_ok=True)
+        # A private directory gives each writer its own temporary link name.
+        with tempfile.TemporaryDirectory(dir=CACHE, prefix=".icon-") as temporary:
+            link = Path(temporary) / "current-icon.png"
+            link.symlink_to(icon_path(data))
+            os.replace(link, CACHE / "current-icon.png")
+    except OSError:
+        # The icon cache is optional; a read-only cache must not break labels.
+        pass
+
+
 def read_json(path):
     try:
         return json.loads(path.read_text())
@@ -122,8 +168,8 @@ def render(place, data, stale=False, plain=False):
     city = place.get("city", "Weather")
     if not data:
         return f"{city} · Weather unavailable" if plain else {
-            "text": "weather --", "tooltip": f"{html.escape(city)}: weather unavailable\nConfigure {CONFIG}",
-            "class": "unavailable"}
+            "text": "--", "tooltip": f"{html.escape(city)}: weather unavailable\nConfigure {CONFIG}",
+            "class": ["unavailable", "weather-cloud-off"]}
     condition = CONDITIONS.get(data["code"], "Weather")
     temperature = f"{round(data['temperature'])}°C"
     suffix = " · cached" if stale else ""
@@ -133,8 +179,11 @@ def render(place, data, stale=False, plain=False):
     tooltip = f"{html.escape(city)} · {temperature} · {condition}\nUpdated {updated} ({data['timezone']})"
     tooltip += "\nCached reading; network unavailable" if stale else ""
     tooltip += "\nWeather data: Open-Meteo"
-    return {"text": f"{temperature} {condition.lower()}" + (" *" if stale else ""),
-            "tooltip": tooltip, "class": "stale" if stale else ("day" if data["is_day"] else "night")}
+    return {"text": temperature + (" *" if stale else ""),
+            "tooltip": tooltip,
+            "class": ["day" if data["is_day"] else "night",
+                      "weather-" + condition_icon(data["code"], data["is_day"])]
+                     + (["stale"] if stale else [])}
 
 
 def main():
@@ -142,17 +191,21 @@ def main():
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--waybar", action="store_true", help="JSON output (default)")
     mode.add_argument("--plain", action="store_true", help="plain label for Hyprlock")
+    mode.add_argument("--icon", action="store_true", help="PNG icon path for Hyprlock; use --cached for instant output")
     parser.add_argument("--refresh", action="store_true", help="refresh before the normal 15-minute expiry")
     parser.add_argument("--cached", action="store_true", help="never access the network")
     args = parser.parse_args()
     place = {"city": "Weather"}
+    data = None
     try:
         place = location()
         data, stale = weather(place, args.refresh, args.cached)
-        result = render(place, data, stale, args.plain)
+        result = icon_path(data) if args.icon else render(place, data, stale, args.plain)
     except (OSError, ValueError, KeyError, TypeError):
-        result = render(place, None, plain=args.plain)
-    print(result if args.plain else json.dumps(result, ensure_ascii=False))
+        data = None
+        result = icon_path(None) if args.icon else render(place, None, plain=args.plain)
+    update_icon_cache(data)
+    print(result if args.plain or args.icon else json.dumps(result, ensure_ascii=False))
 
 
 if __name__ == "__main__":

@@ -90,3 +90,27 @@ menu#waybar-controls-menu separator { min-height: 1px; background: @highlightMed
 #battery.warning:not(.charging) { background-image: url("icons/lucide/battery-low.svg"); }
 #battery.critical:not(.charging) { background-image: url("icons/lucide/battery-critical.svg"); }
 #battery.charging { background-image: url("icons/lucide/battery-charging.svg"); }
+
+/* Weather uses the same Lucide geometry, selected by the provider's condition. */
+#custom-weather {
+  padding-left: 33px;
+  background-repeat: no-repeat;
+  background-position: 3px center;
+  background-size: 22px 22px;
+  background-origin: padding-box;
+  background-image: url("icons/lucide/weather/cloud-off.svg");
+}
+#custom-weather.weather-cloud-drizzle { background-image: url("icons/lucide/weather/cloud-drizzle.svg"); }
+#custom-weather.weather-cloud-fog { background-image: url("icons/lucide/weather/cloud-fog.svg"); }
+#custom-weather.weather-cloud-hail { background-image: url("icons/lucide/weather/cloud-hail.svg"); }
+#custom-weather.weather-cloud-lightning { background-image: url("icons/lucide/weather/cloud-lightning.svg"); }
+#custom-weather.weather-cloud-moon-rain { background-image: url("icons/lucide/weather/cloud-moon-rain.svg"); }
+#custom-weather.weather-cloud-moon { background-image: url("icons/lucide/weather/cloud-moon.svg"); }
+#custom-weather.weather-cloud-off { background-image: url("icons/lucide/weather/cloud-off.svg"); }
+#custom-weather.weather-cloud-rain { background-image: url("icons/lucide/weather/cloud-rain.svg"); }
+#custom-weather.weather-cloud-snow { background-image: url("icons/lucide/weather/cloud-snow.svg"); }
+#custom-weather.weather-cloud-sun-rain { background-image: url("icons/lucide/weather/cloud-sun-rain.svg"); }
+#custom-weather.weather-cloud-sun { background-image: url("icons/lucide/weather/cloud-sun.svg"); }
+#custom-weather.weather-cloud { background-image: url("icons/lucide/weather/cloud.svg"); }
+#custom-weather.weather-moon { background-image: url("icons/lucide/weather/moon.svg"); }
+#custom-weather.weather-sun { background-image: url("icons/lucide/weather/sun.svg"); }

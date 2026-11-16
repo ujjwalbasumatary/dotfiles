@@ -11,6 +11,9 @@ The existing i3/Polybar configuration remains available alongside Plasma Wayland
 - **Waybar:** clock, weather, workspaces and Lucide SVG system controls. Icons
   use fixed 22 px slots and an 8 px text gap, independent of font fallback.
   Upstream attribution and license are included under `.config/waybar/icons/lucide/`.
+  Weather shows a condition icon and temperature, with details in its tooltip.
+  Icons follow the reported condition and use day/night variants; the
+  lockscreen uses matching transparent PNGs from the same SVG artwork.
 - **Kitty / Starship:** Cascadia Mono, 86% background opacity, compact prompt,
   4 pt top padding and 10 pt side/bottom padding. Codex’s input background uses
   65% opacity and submitted-message fills are transparent through Kitty’s
@@ -68,6 +71,10 @@ Fonts/cursor assets are also external dependencies: CaskaydiaMono Nerd Font Mono
 JuliaMono fallback, Papirus-Dark icons and Catppuccin-Macchiato-Rosewater-Cursors.
 
 ### Weather
+
+After restoring the weather configuration, run
+`~/.config/hypr/scripts/weather --icon` once before locking to prime the cached
+lockscreen icon. Waybar and the weather label maintain it afterward.
 
 Waybar and Hyprlock share a keyless [Open-Meteo](https://open-meteo.com/) helper.
 Configure your city locally; the location file and cache are excluded from Git.
