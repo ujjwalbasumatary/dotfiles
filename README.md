@@ -16,7 +16,7 @@ The existing i3/Polybar configuration remains available alongside Plasma Wayland
   lockscreen uses matching transparent PNGs from the same SVG artwork.
 - **Kitty / Starship:** Cascadia Mono, 86% background opacity, compact prompt,
   4 pt top padding and 10 pt side/bottom padding. Codex’s input background uses
-  65% opacity and submitted-message fills are transparent through Kitty’s
+  88% opacity and submitted-message fills are transparent through Kitty’s
   exact-colour transparency setting. These RGB matches depend on the Rosé Pine
   terminal background and Codex’s current rendering.
 - **Neovim:** Rosé Pine, transparent editor, square popups and pinned plugins.
