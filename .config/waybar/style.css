@@ -1,4 +1,4 @@
-/* Text labels and centered workspaces inspired by m-vikanshu/nix-config.
+/* Centered workspaces inspired by m-vikanshu/nix-config; Lucide SVG status icons.
  * Local Rosé Pine design: square edges, 18px Cascadia Mono, terminal opacity. */
 @import "./rose-pine.css";
 * {
@@ -47,7 +47,7 @@ window#waybar { background: alpha(@base, 0.86); color: @text; }
 #battery.warning { color: @gold; }
 #battery.critical:not(.charging) { color: @love; }
 #network.disconnected, #bluetooth.off, #bluetooth.disabled,
-#pulseaudio.muted { color: @muted; }
+#pulseaudio.output.muted, #pulseaudio.input.source-muted { color: @muted; }
 window#waybar.empty #window { border: none; }
 tooltip, menu#waybar-controls-menu {
   background: alpha(@base, 0.96);
@@ -64,3 +64,29 @@ menu#waybar-controls-menu separator { min-height: 1px; background: @highlightMed
 
 #custom-weather { margin: 6px 5px; padding: 0 3px; color: @foam; border-bottom: 1px solid alpha(@foam, 0.5); }
 #custom-weather.stale, #custom-weather.unavailable { color: @subtle; }
+
+/* Fixed SVG slots: 22px icon + 8px gap, independent of the text font. */
+#clock, #cpu, #backlight, #bluetooth, #pulseaudio, #network, #battery {
+  padding-left: 33px;
+  background-repeat: no-repeat;
+  background-position: 3px center;
+  background-size: 22px 22px;
+  background-origin: padding-box;
+}
+#clock { background-image: url("icons/lucide/clock.svg"); }
+#cpu { background-image: url("icons/lucide/cpu.svg"); }
+#backlight { background-image: url("icons/lucide/sun.svg"); }
+#bluetooth { background-image: url("icons/lucide/bluetooth.svg"); }
+#bluetooth.disabled, #bluetooth.off, #bluetooth.no-controller { background-image: url("icons/lucide/bluetooth-off.svg"); }
+#pulseaudio.output { background-image: url("icons/lucide/volume-2.svg"); }
+#pulseaudio.output.muted, #pulseaudio.output.sink-muted { background-image: url("icons/lucide/volume-x.svg"); }
+#pulseaudio.input { background-image: url("icons/lucide/mic.svg"); }
+#pulseaudio.input.source-muted { background-image: url("icons/lucide/mic-off.svg"); }
+#network { background-image: url("icons/lucide/wifi.svg"); }
+#network.ethernet { background-image: url("icons/lucide/ethernet-port.svg"); }
+#network.disconnected, #network.disabled { background-image: url("icons/lucide/wifi-off.svg"); }
+#battery { background-image: url("icons/lucide/battery.svg"); }
+#battery.full { background-image: url("icons/lucide/battery-full.svg"); }
+#battery.warning:not(.charging) { background-image: url("icons/lucide/battery-low.svg"); }
+#battery.critical:not(.charging) { background-image: url("icons/lucide/battery-critical.svg"); }
+#battery.charging { background-image: url("icons/lucide/battery-charging.svg"); }

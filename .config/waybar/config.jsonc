@@ -55,7 +55,7 @@
   },
   "cpu": {
     "interval": 5,
-    "format": "<span foreground=\"#f6c177\">CPU</span> {usage}%",
+    "format": "{usage}%",
     "on-click": "kitty -e htop"
   },
   "memory": {
@@ -64,8 +64,8 @@
     "on-click": "kitty -e htop"
   },
   "clock": {
-    "format": "<span foreground=\"#9ccfd8\">TIME</span> {:%H:%M}",
-    "format-alt": "<span foreground=\"#9ccfd8\">DATE</span> {:%d %b %H:%M}",
+    "format": "{:%H:%M}",
+    "format-alt": "{:%d %b %H:%M}",
     "tooltip-format": "<span>{calendar}</span>",
     "calendar": {
       "mode": "month",
@@ -89,12 +89,12 @@
     "tooltip-format-deactivated": "Normal idle timers: lock after 10 minutes, display off after 11"
   },
   "network": {
-    "format": "NET",
-    "format-wifi": "<span foreground=\"#9ccfd8\">NET</span> {signalStrength}%",
-    "format-ethernet": "NET lan",
-    "format-disconnected": "NET off",
-    "tooltip-format-wifi": "{essid} · {signalStrength}%\n{ipaddr}\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
-    "tooltip-format-ethernet": "⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+    "format": "net",
+    "format-wifi": "{signalStrength}%",
+    "format-ethernet": "lan",
+    "format-disconnected": "off",
+    "tooltip-format-wifi": "{essid} \u00b7 {signalStrength}%\n{ipaddr}\n\u21e3{bandwidthDownBytes}  \u21e1{bandwidthUpBytes}",
+    "tooltip-format-ethernet": "\u21e3{bandwidthDownBytes}  \u21e1{bandwidthUpBytes}",
     "tooltip-format-disconnected": "Disconnected",
     "interval": 3,
     "menu": "on-click",
@@ -107,11 +107,11 @@
     }
   },
   "battery": {
-    "format": "<span foreground=\"#c4a7e7\">BAT</span> {capacity}%",
-    "format-discharging": "<span foreground=\"#c4a7e7\">BAT</span> {capacity}%",
-    "format-charging": "<span foreground=\"#c4a7e7\">AC</span> {capacity}%",
-    "format-plugged": "<span foreground=\"#c4a7e7\">AC</span> {capacity}%",
-    "format-full": "<span foreground=\"#c4a7e7\">BAT</span> {capacity}%",
+    "format": "{capacity}%",
+    "format-discharging": "{capacity}%",
+    "format-charging": "{capacity}%",
+    "format-plugged": "{capacity}%",
+    "format-full": "{capacity}%",
     "tooltip-format-discharging": "{timeTo}",
     "tooltip-format-charging": "{timeTo}",
     "interval": 30,
@@ -123,10 +123,10 @@
     "adapter": "ACAD"
   },
   "bluetooth": {
-    "format": "BT on",
-    "format-disabled": "BT off",
-    "format-off": "BT off",
-    "format-connected": "BT {num_connections}",
+    "format": "on",
+    "format-disabled": "off",
+    "format-off": "off",
+    "format-connected": "{num_connections}",
     "tooltip-format": "Devices connected: {num_connections}\nClick: quick controls",
     "menu": "on-click",
     "menu-file": "/home/ujjwal/.config/waybar/menus/bluetooth.xml",
@@ -138,16 +138,16 @@
   },
   "backlight": {
     "device": "amdgpu_bl1",
-    "format": "<span foreground=\"#f6c177\">BRI</span> {percent}%",
+    "format": "{percent}%",
     "tooltip-format": "{percent}%",
     "on-scroll-up": "/home/ujjwal/.config/hypr/scripts/desktop-control brightness up 5",
     "on-scroll-down": "/home/ujjwal/.config/hypr/scripts/desktop-control brightness down 5"
   },
   "pulseaudio#input": {
-    "format-source": "MIC on",
-    "format-source-muted": "MIC off",
+    "format-source": "on",
+    "format-source-muted": "off",
     "format": "{format_source}",
-    "tooltip-format": "Microphone: {source_volume}%\nClick: quick controls · right click: mute",
+    "tooltip-format": "Microphone: {source_volume}%\nClick: quick controls \u00b7 right click: mute",
     "scroll-step": 1,
     "smooth-scrolling-threshold": 1,
     "max-volume": 100,
@@ -165,9 +165,9 @@
     }
   },
   "pulseaudio#output": {
-    "format": "<span foreground=\"#eb6f92\">VOL</span> {volume}%",
-    "tooltip-format": "Volume: {volume}%\nClick: quick controls · right click: mute",
-    "format-muted": "<span foreground=\"#eb6f92\">VOL</span> off",
+    "format": "{volume}%",
+    "tooltip-format": "Volume: {volume}%\nClick: quick controls \u00b7 right click: mute",
+    "format-muted": "off",
     "max-volume": 100,
     "scroll-step": 2,
     "smooth-scrolling-threshold": 1,
@@ -190,7 +190,7 @@
   },
   "mpris": {
     "format": "{artist} - {title}",
-    "format-paused": "paused · {artist}",
+    "format-paused": "paused \u00b7 {artist}",
     "max-length": 16,
     "ignored-players": [
       "firefox",
@@ -200,7 +200,7 @@
     "on-click": "playerctl play-pause",
     "on-scroll-up": "playerctl previous",
     "on-scroll-down": "playerctl next",
-    "tooltip-format": "{artist} · {title}"
+    "tooltip-format": "{artist} \u00b7 {title}"
   },
   "spacing": 0,
   "fixed-center": true,

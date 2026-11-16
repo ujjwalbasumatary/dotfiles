@@ -8,7 +8,9 @@ The existing i3/Polybar configuration remains available alongside Plasma Wayland
 
 - **Hyprland:** Lua configuration for 0.57.2, wallpaper, idle lock, square
   launcher/notifications, volume and brightness feedback, and lid-aware displays.
-- **Waybar:** clock, weather, workspaces and text-labelled system controls.
+- **Waybar:** clock, weather, workspaces and Lucide SVG system controls. Icons
+  use fixed 22 px slots and an 8 px text gap, independent of font fallback.
+  Upstream attribution and license are included under `.config/waybar/icons/lucide/`.
 - **Kitty / Starship:** Cascadia Mono, 86% background opacity, compact prompt,
   4 pt top padding and 10 pt side/bottom padding. Codex’s input background uses
   65% opacity and submitted-message fills are transparent through Kitty’s
