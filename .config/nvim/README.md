@@ -12,7 +12,7 @@ Automatic plugin-update checks are off; inspect and update deliberately with
 
 ## Appearance
 
-Kitty uses JetBrains Mono at 18 pt with the Rosé Pine terminal palette and
+Kitty uses Cascadia Mono at 18 pt with the Rosé Pine terminal palette and
 0.86 background opacity. Terminal Neovim inherits its font and transparency.
 JuliaMono remains available as a fallback for mathematical characters.
 

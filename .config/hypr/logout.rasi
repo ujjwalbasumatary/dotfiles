@@ -1,0 +1,7 @@
+/* A compact choice menu; the application launcher keeps its search field. */
+@theme "/home/ujjwal/.config/hypr/rofi.rasi"
+
+window { width: 320px; padding: 16px; }
+mainbox { children: [ listview ]; }
+listview { lines: 2; fixed-height: true; spacing: 4px; }
+element { children: [ element-text ]; padding: 12px; }

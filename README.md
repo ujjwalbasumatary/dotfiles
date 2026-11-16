@@ -9,8 +9,11 @@ The existing i3/Polybar configuration remains available alongside Plasma Wayland
 - **Hyprland:** Lua configuration for 0.57.2, wallpaper, idle lock, square
   launcher/notifications, volume and brightness feedback, and lid-aware displays.
 - **Waybar:** clock, weather, workspaces and text-labelled system controls.
-- **Kitty / Starship:** JetBrains Mono, 86% background opacity, compact prompt,
-  4 pt top padding and 10 pt side/bottom padding.
+- **Kitty / Starship:** Cascadia Mono, 86% background opacity, compact prompt,
+  4 pt top padding and 10 pt side/bottom padding. Codex’s input background uses
+  65% opacity and submitted-message fills are transparent through Kitty’s
+  exact-colour transparency setting. These RGB matches depend on the Rosé Pine
+  terminal background and Codex’s current rendering.
 - **Neovim:** Rosé Pine, transparent editor, square popups and pinned plugins.
   See [.config/nvim/README.md](.config/nvim/README.md) for coding workflows.
 - **Yazi:** Rosé Pine icons and syntax previews, transparent panels, and a
@@ -59,7 +62,7 @@ reopened to inherit Hyprland's GTK/Qt theme and cursor environment.
 
 Wallpapers are not redistributed. Supply `~/Pictures/evening-sky.png` for
 Hyprland and its lock screen; review the additional image paths in i3/Polybar.
-Fonts/cursor assets are also external dependencies: JetBrainsMono Nerd Font Mono,
+Fonts/cursor assets are also external dependencies: CaskaydiaMono Nerd Font Mono,
 JuliaMono fallback, Papirus-Dark icons and Catppuccin-Macchiato-Rosewater-Cursors.
 
 ### Weather
@@ -82,9 +85,11 @@ The legacy Polybar provider optionally reads `OPENWEATHERMAP_API_KEY` and
 
 ## Shortcuts and dependencies
 
-`Super+Return`: terminal; `Super+D`: launcher; `Ctrl+Alt+L`: lock;
+`Super+Return`: terminal; `Super+D` or `Ctrl+D`: toggle launcher; `Ctrl+Alt+L`: lock;
 `Super+Shift+E`: logout prompt; `Super+1..0`: workspace;
-`Super+Shift+C`: reload. Waybar's `idle` toggle changes to `awake` to pause
+`Super+Shift+C`: reload. The global `Ctrl+D` launcher binding replaces the terminal
+EOF shortcut; remove that binding if you prefer shell EOF. Waybar's `idle` toggle
+changes to `awake` to pause
 automatic locking/display sleep. Media keys and bar scrolling show a short OSD.
 
 Core tools: Hyprland, Waybar, hyprpaper, hypridle, hyprlock, mako, Kitty, Rofi,

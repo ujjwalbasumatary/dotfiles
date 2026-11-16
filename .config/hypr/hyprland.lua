@@ -2,7 +2,10 @@
 -- Reference: https://github.com/hyprwm/Hyprland/blob/v0.57.2/example/hyprland.lua
 -- Deployed from the saved bundle in ~/.local/share/hyprland-prepared/.
 local rofi_theme = "/home/ujjwal/.config/hypr/rofi.rasi"
-local launcher = "rofi -no-config -show drun -show-icons -icon-theme Papirus-Dark -theme " .. rofi_theme
+-- While the launcher has focus, Rofi handles the same keys as cancel actions.
+local launcher = "rofi -no-config -show drun -show-icons -icon-theme Papirus-Dark -global-kb "
+    .. "-kb-cancel Escape,Control+g,Control+bracketleft,MouseSecondary,Control+d,Super+d "
+    .. "-kb-remove-char-forward Delete -theme " .. rofi_theme
 
 hl.monitor({ output = "", mode = "preferred", position = "auto", scale = 1 })
 hl.env("GTK_THEME", "RosePine-Square")
@@ -58,6 +61,7 @@ end
 
 hl.bind("SUPER + Return", hl.dsp.exec_cmd("kitty"))
 hl.bind("SUPER + D", hl.dsp.exec_cmd(launcher))
+hl.bind("CTRL + D", hl.dsp.exec_cmd(launcher))
 hl.bind("SUPER + Q", hl.dsp.window.close())
 hl.bind("SUPER + F", hl.dsp.window.fullscreen({ action = "toggle", mode = "fullscreen" }))
 hl.bind("SUPER + SHIFT + space", hl.dsp.window.float({ action = "toggle" }))
@@ -66,7 +70,7 @@ hl.bind("SUPER + SHIFT + W", hl.dsp.exec_cmd("firefox"))
 hl.bind("SUPER + SHIFT + C", hl.dsp.exec_cmd("hyprctl reload"))
 hl.bind("CTRL + ALT + L", hl.dsp.exec_cmd("loginctl lock-session"))
 hl.bind("SUPER + SHIFT + E", hl.dsp.exec_cmd(
-    [[printf 'Cancel\nLog out\n' | rofi -no-config -dmenu -p Session -theme /home/ujjwal/.config/hypr/rofi.rasi | grep -qx 'Log out' && hyprctl dispatch 'hl.dsp.exit()']]
+    [[printf 'Cancel\nLog out\n' | rofi -no-config -dmenu -no-custom -theme /home/ujjwal/.config/hypr/logout.rasi | grep -qx 'Log out' && hyprctl dispatch 'hl.dsp.exit()']]
 ))
 
 for key, direction in pairs({ H = "left", J = "down", K = "up", L = "right",

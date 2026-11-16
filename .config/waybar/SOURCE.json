@@ -2,7 +2,7 @@
   "design_reference": "https://github.com/m-vikanshu/nix-config/tree/9d445482508b5260d2c1a94ad8a93675a87e6b45/dotfiles/waybar",
   "adaptations": [
     "Continuous square bar, text labels, centered workspaces",
-    "Original local CSS; Ros\u00e9 Pine palette, JetBrains Mono18px, height44px, opacity0.86",
+    "Original local CSS; Ros\u00e9 Pine palette, Cascadia Mono18px, height44px, opacity0.86",
     "Local controls retained; system tray retains application-provided icons"
   ],
   "previous_design": "HANCORE V2.1; see LICENSE.HANCORE"
