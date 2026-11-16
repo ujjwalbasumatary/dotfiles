@@ -1,27 +1,22 @@
+# Kanagawa Wave i3/X11 session; Plasma Wayland keeps its own compositor.
 set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango: JetBrains Mono Nerd Font 15
+font pango:JetBrainsMono Nerd Font Mono 10
 
-exec --no-startup-id dex --autostart --environment i3
-
-# The combination of xss-lock, nm-applet and pactl is a popular choice, so
-# they are included here as an example. Modify as you see fit.
+# Start helpers only in this i3 session.
+exec --no-startup-id ~/.config/i3/session-start.sh
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --image /home/ujjwal/catppuccin-wallpapers/landscapes/Cloudsnight.png --nofork
-# NetworkManager is the most popular way to manage wireless networks on Linux,
-# and nm-applet is a desktop environment-independent system tray GUI for it.
-# exec --no-startup-id nm-applet
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --image /home/ujjwal/Pictures/black_hole.png --nofork
 
 # Use pactl to adjust volume in PulseAudio.
-set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +1% && $refresh_i3status
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -1% && $refresh_i3status
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +1%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -1%
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -31,20 +26,21 @@ floating_modifier $mod
 tiling_drag modifier titlebar
 
 # gaps
-gaps inner 10px
-gaps outer 10px
+gaps inner 8
+gaps outer 4
+smart_gaps on
 
 # start a terminal
-bindsym $mod+Return exec --no-startup-id kitty 
+bindsym $mod+Return exec --no-startup-id kitty -o linux_display_server=x11
 
 # kill focused window
 bindsym $mod+q kill
 
 # show tabs using rofi
-bindsym $mod+t exec --no-startup-id rofi -show window
+bindsym $mod+t exec --no-startup-id rofi -no-config -show window -icon-theme Papirus-Dark -theme ~/.config/i3/rofi.rasi
 
 # start rofi (a program launcher)
-bindsym $mod+d exec --no-startup-id rofi -show drun
+bindsym $mod+d exec --no-startup-id rofi -no-config -show drun -show-icons -icon-theme Papirus-Dark -theme ~/.config/i3/rofi.rasi
 
 #main shortcuts for screenshots
 #save screenshot to /screenshots/
@@ -52,20 +48,20 @@ bindsym Mod1+shift+s exec --no-startup-id maim ~/screenshots/$(date -u +"%Y-%m-%
 #save current window to /screenshots/
 bindsym Mod1+shift+w exec --no-startup-id maim --window $(xdotool getactivewindow) ~/screenshots/$(date -u +"%Y-%m-%dT%H:%M:%S%Z").png
 #save current screen to clipboard and screenshots
-bindsym Mod1+shift+c exec --no-startup-id maim -s | xclip -selection clipboard -t image/png -i
-
-#open chrome
-bindsym $mod+shift+w exec --no-startup-id google-chrome-stable
+bindsym Mod1+shift+c exec --no-startup-id maim -s | tee "$HOME/screenshots/$(date -u +%Y-%m-%dT%H:%M:%S%Z).png" | xclip -selection clipboard -t image/png -i
+# Open the browser
+bindsym $mod+Shift+w exec --no-startup-id firefox
 
 assign [class="Google-chrome"] 1
 assign [class="zoom"] 10
-assign [class="thunderbird"] 10
+assign [class="org.mozilla.Thunderbird"] 10
 assign [class="TelegramDesktop"] 9
+assign [class="firefox"] 1
 
 exec --no-startup-id zoom
 exec --no-startup-id thunderbird
 
-bindsym Mod1+shift+l exec --no-startup-id i3lock --image /home/ujjwal/Pictures/astronaut.png
+bindsym ctrl+Mod1+l exec --no-startup-id i3lock --image /home/ujjwal/Pictures/astronaut.png
 
 bindsym Mod1+shift+minus move scratchpad
 bindsym Mod1+shift+plus scratchpad show
@@ -155,6 +151,10 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 #open pycharm
 bindsym $mod+c exec bash /opt/pycharm-community-2024.2.3/bin/pycharm.sh
 
+# note taking app
+# for_window [class="xpad"] floating enable
+# for_window [class="com.vixalien.sticky"] floating enable
+
 # resize window (you can also use the mouse for that)
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
@@ -180,22 +180,19 @@ mode "resize" {
         bindsym $mod+r mode "default"
 }
 
-default_border pixel 3
+default_border pixel 2
+default_floating_border pixel 2
+hide_edge_borders smart
 
-include ./themes/catppuccin-mocha
-include ./colors.conf
+include ~/.config/i3/themes/kanagawa
+include ~/.config/i3/colors.conf
 
 bindsym $mod+r mode "resize"
 
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
-#bar {
-#	position top
-        #status_command i3status
-#}
-exec_always --no-startup-id picom &
+exec_always --no-startup-id ~/.config/i3/compositor.sh
+# exec_always xpad
 bindsym XF86MonBrightnessDown exec brightnessctl set 10%-
 bindsym XF86MonBrightnessUp exec brightnessctl set +10%
 
-exec_always --no-startup-id ~/.config/polybar/launch.sh &
-exec --no-startup-id sh ~/.fehbg &
+exec_always --no-startup-id ~/.config/polybar/launch.sh
+exec --no-startup-id feh --no-fehbg --bg-fill /home/ujjwal/.local/share/wallpapers/Kanagawa-Wave-Night/contents/images/1672x941.png

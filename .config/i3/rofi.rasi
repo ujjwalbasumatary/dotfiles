@@ -1,0 +1,46 @@
+/* Kanagawa Wave launcher, scoped to the i3 key bindings. */
+configuration {
+    show-icons: true;
+    icon-theme: "Papirus-Dark";
+}
+* {
+    font: "JetBrainsMono Nerd Font Mono 11";
+    background: #1f1f28;
+    foreground: #dcd7ba;
+    accent: #c0a36e;
+    muted: #727169;
+    surface: #16161d;
+    selection: #2d4f67;
+    background-color: @background;
+    text-color: @foreground;
+    border-color: @muted;
+}
+window {
+    width: 620px;
+    border: 1px;
+    border-radius: 8px;
+    padding: 20px;
+    location: center;
+    anchor: center;
+}
+mainbox { spacing: 16px; children: [ inputbar, listview ]; }
+inputbar {
+    spacing: 12px;
+    padding: 12px;
+    background-color: @surface;
+    children: [ prompt, entry ];
+}
+prompt { text-color: @accent; background-color: inherit; }
+entry {
+    placeholder: "Search applications…";
+    placeholder-color: @muted;
+    background-color: inherit;
+}
+listview { lines: 8; columns: 1; fixed-height: false; spacing: 4px; scrollbar: false; }
+element { padding: 10px; spacing: 12px; border-radius: 4px; children: [ element-icon, element-text ]; }
+element selected.normal, element selected.active {
+    background-color: @selection;
+    text-color: @foreground;
+}
+element-icon { size: 24px; expand: false; background-color: inherit; }
+element-text { background-color: inherit; text-color: inherit; vertical-align: 0.5; }

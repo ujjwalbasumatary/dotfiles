@@ -1,0 +1,7 @@
+# Match ~/.config/kitty/kanagawa-wave.conf.
+set $base       #1f1f28
+set $surface    #363646
+set $text       #dcd7ba
+set $muted      #727169
+set $accent     #658594
+set $urgent     #c34043

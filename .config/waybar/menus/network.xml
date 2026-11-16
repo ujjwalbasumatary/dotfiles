@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='utf-8'?>
+<interface>
+  <requires lib="gtk+" version="3.20" />
+  <object class="GtkMenu" id="menu">
+    <property name="name">waybar-controls-menu</property>
+    <property name="visible">True</property>
+    <child>
+      <object class="GtkMenuItem" id="menu_title">
+        <property name="label">Network</property>
+        <property name="sensitive">False</property>
+        <property name="visible">True</property>
+        <style>
+          <class name="controls-title" />
+        </style>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="wifi_enable">
+        <property name="label">Enable Wi-Fi</property>
+        <property name="visible">True</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="wifi_disable">
+        <property name="label">Disable Wi-Fi</property>
+        <property name="visible">True</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkSeparatorMenuItem" id="separator_2">
+        <property name="visible">True</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="network_connect">
+        <property name="label">Connect to network…</property>
+        <property name="visible">True</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="network_advanced">
+        <property name="label">Advanced network settings…</property>
+        <property name="visible">True</property>
+      </object>
+    </child>
+  </object>
+</interface>

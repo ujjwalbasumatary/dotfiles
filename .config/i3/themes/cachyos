@@ -1,0 +1,7 @@
+# Dark teal base inspired by the CachyOS i3 theme.
+set $base       #002b36
+set $surface    #073642
+set $text       #bcc3c3
+set $muted      #657b83
+set $accent     #00c7b7
+set $urgent     #f07178

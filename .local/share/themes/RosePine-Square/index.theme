@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=Rosé Pine Square
+Comment=Local square Rosé Pine GTK styling for Hyprland
+
+[X-GNOME-Metatheme]
+GtkTheme=RosePine-Square
+IconTheme=Papirus-Dark
+CursorTheme=Catppuccin-Macchiato-Rosewater-Cursors

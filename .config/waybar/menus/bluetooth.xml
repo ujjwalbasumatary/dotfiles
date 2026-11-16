@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='utf-8'?>
+<interface>
+  <requires lib="gtk+" version="3.20" />
+  <object class="GtkMenu" id="menu">
+    <property name="name">waybar-controls-menu</property>
+    <property name="visible">True</property>
+    <child>
+      <object class="GtkMenuItem" id="menu_title">
+        <property name="label">Bluetooth</property>
+        <property name="sensitive">False</property>
+        <property name="visible">True</property>
+        <style>
+          <class name="controls-title" />
+        </style>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="bluetooth_enable">
+        <property name="label">Turn Bluetooth on</property>
+        <property name="visible">True</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="bluetooth_disable">
+        <property name="label">Turn Bluetooth off</property>
+        <property name="visible">True</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkSeparatorMenuItem" id="separator_2">
+        <property name="visible">True</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="bluetooth_devices">
+        <property name="label">Devices…</property>
+        <property name="visible">True</property>
+      </object>
+    </child>
+  </object>
+</interface>

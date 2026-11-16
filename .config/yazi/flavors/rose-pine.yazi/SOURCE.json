@@ -1,0 +1,19 @@
+{
+  "repository": "https://github.com/rose-pine/yazi",
+  "commit": "c89d745573d4fcfe0550fe6646f9f9ab1c0e51db",
+  "files": [
+    "LICENSE",
+    "README.md",
+    "flavors/rose-pine.yazi/flavor.toml",
+    "flavors/rose-pine.yazi/tmtheme.xml",
+    "themes/rose-pine.toml"
+  ],
+  "compatibility_changes": [
+    "Help section renamed on/run to chord/action, added border, removed unsupported desc/footer for Yazi 26.9.1."
+  ],
+  "local_overrides": [
+    "Muted tab/mode/selection backgrounds and preserved current file/icon matching rules with Ros\u00e9 Pine main colors.",
+    "App and status backgrounds reset to terminal default for transparency; selection and mode highlights retained."
+  ],
+  "preview_transparency": "Yazi v26.9.1 ignores syntax background colors in yazi-core/src/highlighter.rs to_line_widget; official tmtheme kept unchanged."
+}

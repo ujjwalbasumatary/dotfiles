@@ -1,0 +1,21 @@
+# Keep local configuration and runtime data out of this public repository.
+.config/weather/location.json
+.config/polybar/weather.env
+.env
+.env.*
+!.env.example
+*.bak
+*.swp
+*.swo
+__pycache__/
+*.pyc
+.cache/
+.local/state/
+.mozilla/
+.ssh/
+.gnupg/
+.aws/
+.codex/
+.claude/
+*history*
+screenshots/

@@ -1,0 +1,159 @@
+#!/usr/bin/env python3
+"""Keyless Open-Meteo weather for Waybar and Hyprlock, with a shared cache.
+
+Local location: $XDG_CONFIG_HOME/weather/location.json (never publish this file).
+API/condition reference: https://open-meteo.com/en/docs
+Geocoding reference: https://open-meteo.com/en/docs/geocoding-api
+"""
+import argparse
+import fcntl
+import html
+import json
+import math
+import os
+from pathlib import Path
+import tempfile
+import time
+from urllib.parse import urlencode
+from urllib.request import Request, urlopen
+from zoneinfo import ZoneInfo
+from datetime import datetime
+
+CONFIG = Path(os.environ.get("XDG_CONFIG_HOME", Path.home() / ".config")) / "weather/location.json"
+CACHE = Path(os.environ.get("XDG_CACHE_HOME", Path.home() / ".cache")) / "desktop-weather"
+TTL = 15 * 60
+MAX_STALE = 6 * 60 * 60
+CONDITIONS = {
+    0: "Clear", 1: "Mostly clear", 2: "Partly cloudy", 3: "Cloudy",
+    45: "Fog", 48: "Freezing fog", 51: "Light drizzle", 53: "Drizzle",
+    55: "Heavy drizzle", 56: "Freezing drizzle", 57: "Freezing drizzle",
+    61: "Light rain", 63: "Rain", 65: "Heavy rain", 66: "Freezing rain",
+    67: "Freezing rain", 71: "Light snow", 73: "Snow", 75: "Heavy snow",
+    77: "Snow grains", 80: "Showers", 81: "Showers", 82: "Heavy showers",
+    85: "Snow showers", 86: "Heavy snow showers", 95: "Thunderstorm",
+    96: "Storm with hail", 97: "Heavy thunderstorm", 99: "Storm with hail",
+}
+
+
+def read_json(path):
+    try:
+        return json.loads(path.read_text())
+    except (OSError, ValueError):
+        return None
+
+
+def location():
+    data = read_json(CONFIG)
+    if not isinstance(data, dict):
+        raise ValueError("Weather location is not configured")
+    city = str(data["city"]).strip()
+    latitude, longitude = float(data["latitude"]), float(data["longitude"])
+    timezone = str(data.get("timezone", "auto"))
+    if not city or len(city) > 80 or not -90 <= latitude <= 90 or not -180 <= longitude <= 180:
+        raise ValueError("Invalid weather location")
+    if timezone != "auto":
+        ZoneInfo(timezone)
+    return {"city": city, "latitude": latitude, "longitude": longitude, "timezone": timezone}
+
+
+def fingerprint(place):
+    return json.dumps(place, sort_keys=True)
+
+
+def valid_cache(data, place):
+    try:
+        return (data["location"] == fingerprint(place)
+                and 0 <= time.time() - float(data["fetched_at"]) < MAX_STALE
+                and math.isfinite(float(data["temperature"]))
+                and isinstance(data["code"], int) and data["is_day"] in (0, 1))
+    except (KeyError, TypeError, ValueError):
+        return False
+
+
+def fetch(place):
+    query = urlencode({"latitude": place["latitude"], "longitude": place["longitude"],
+                       "current": "temperature_2m,weather_code,is_day",
+                       "temperature_unit": "celsius", "timezone": place["timezone"],
+                       "forecast_days": 1})
+    request = Request("https://api.open-meteo.com/v1/forecast?" + query,
+                      headers={"User-Agent": "desktop-weather/1.0", "Accept": "application/json"})
+    with urlopen(request, timeout=5) as response:
+        body = json.loads(response.read(65536))
+    current = body["current"]
+    temperature = float(current["temperature_2m"])
+    code, is_day = int(current["weather_code"]), int(current["is_day"])
+    if not math.isfinite(temperature) or not -100 <= temperature <= 70 or is_day not in (0, 1):
+        raise ValueError("Invalid weather response")
+    return {"location": fingerprint(place), "fetched_at": time.time(),
+            "temperature": temperature, "code": code, "is_day": is_day,
+            "observed_at": str(current["time"]), "timezone": str(body["timezone"])}
+
+
+def write_cache(data):
+    with tempfile.NamedTemporaryFile(mode="w", dir=CACHE, prefix=".weather-", delete=False) as stream:
+        temporary = Path(stream.name)
+        json.dump(data, stream)
+    try:
+        os.replace(temporary, CACHE / "current.json")
+    finally:
+        temporary.unlink(missing_ok=True)
+
+
+def weather(place, refresh=False, cached_only=False):
+    CACHE.mkdir(parents=True, mode=0o700, exist_ok=True)
+    old = read_json(CACHE / "current.json")
+    cached = old if valid_cache(old, place) else None
+    if cached_only or (cached and not refresh and time.time() - cached["fetched_at"] < TTL):
+        return cached, bool(cached and time.time() - cached["fetched_at"] >= TTL)
+    with (CACHE / "refresh.lock").open("w") as lock:
+        try:
+            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError:
+            return cached, bool(cached and time.time() - cached["fetched_at"] >= TTL)
+        try:
+            data = fetch(place)
+            write_cache(data)
+            return data, False
+        except (OSError, ValueError, KeyError, TypeError):
+            return cached, bool(cached)
+
+
+def render(place, data, stale=False, plain=False):
+    city = place.get("city", "Weather")
+    if not data:
+        return f"{city} · Weather unavailable" if plain else {
+            "text": "weather --", "tooltip": f"{html.escape(city)}: weather unavailable\nConfigure {CONFIG}",
+            "class": "unavailable"}
+    condition = CONDITIONS.get(data["code"], "Weather")
+    temperature = f"{round(data['temperature'])}°C"
+    suffix = " · cached" if stale else ""
+    if plain:
+        return f"{city} · {temperature} · {condition}{suffix}"
+    updated = datetime.fromtimestamp(data["fetched_at"], ZoneInfo(data["timezone"])).strftime("%H:%M")
+    tooltip = f"{html.escape(city)} · {temperature} · {condition}\nUpdated {updated} ({data['timezone']})"
+    tooltip += "\nCached reading; network unavailable" if stale else ""
+    tooltip += "\nWeather data: Open-Meteo"
+    return {"text": f"{temperature} {condition.lower()}" + (" *" if stale else ""),
+            "tooltip": tooltip, "class": "stale" if stale else ("day" if data["is_day"] else "night")}
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument("--waybar", action="store_true", help="JSON output (default)")
+    mode.add_argument("--plain", action="store_true", help="plain label for Hyprlock")
+    parser.add_argument("--refresh", action="store_true", help="refresh before the normal 15-minute expiry")
+    parser.add_argument("--cached", action="store_true", help="never access the network")
+    args = parser.parse_args()
+    place = {"city": "Weather"}
+    try:
+        place = location()
+        data, stale = weather(place, args.refresh, args.cached)
+        result = render(place, data, stale, args.plain)
+    except (OSError, ValueError, KeyError, TypeError):
+        result = render(place, None, plain=args.plain)
+    print(result if args.plain else json.dumps(result, ensure_ascii=False))
+
+
+if __name__ == "__main__":
+    main()

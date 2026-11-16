@@ -1,0 +1,11 @@
+{
+  "repository": "https://github.com/rose-pine/neovim",
+  "commit": "ff483051a47e27d84bdef47703538df1ed9f4a47",
+  "license": "MIT; installed plugin LICENSE",
+  "variant": "main",
+  "adaptations": [
+    "Terminal transparency, preserving readable completion menus and selection rows",
+    "Square borders configured in lua/config/options.lua and lua/config/lsp.lua",
+    "Existing VimTeX delimiter and Snacks match/indent highlights retained with Ros\u00e9 Pine colours"
+  ]
+}

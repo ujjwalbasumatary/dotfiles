@@ -1,0 +1,47 @@
+/* Rosé Pine launcher, scoped to Hyprland. */
+configuration {
+    show-icons: true;
+    icon-theme: "Papirus-Dark";
+}
+* {
+    font: "JetBrainsMono Nerd Font Mono 13";
+    background: #191724;
+    foreground: #e0def4;
+    accent: #c4a7e7;
+    muted: #6e6a86;
+    surface: #1f1d2e;
+    selection: #26233a;
+    background-color: @background;
+    text-color: @foreground;
+    border-color: @muted;
+}
+window {
+    width: 700px;
+    border: 1px;
+    border-radius: 0px;
+    padding: 22px;
+    location: center;
+    anchor: center;
+}
+mainbox { spacing: 16px; children: [ inputbar, listview ]; }
+inputbar {
+    spacing: 12px;
+    padding: 14px;
+    border-radius: 0px;
+    background-color: @surface;
+    children: [ prompt, entry ];
+}
+prompt { text-color: @accent; background-color: inherit; }
+entry {
+    placeholder: "Search applications…";
+    placeholder-color: @muted;
+    background-color: inherit;
+}
+listview { lines: 8; columns: 1; fixed-height: false; spacing: 4px; scrollbar: false; }
+element { padding: 10px; spacing: 14px; border-radius: 0px; children: [ element-icon, element-text ]; }
+element selected.normal, element selected.active {
+    background-color: @selection;
+    text-color: @foreground;
+}
+element-icon { size: 32px; expand: false; background-color: inherit; }
+element-text { background-color: inherit; text-color: inherit; vertical-align: 0.5; }

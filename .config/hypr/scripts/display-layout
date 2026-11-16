@@ -1,0 +1,82 @@
+#!/usr/bin/env python3
+"""Extend above the laptop; use the external display alone when docked closed."""
+import argparse
+import fcntl
+import json
+import os
+from pathlib import Path
+import subprocess
+
+INTERNAL = "eDP-1"
+
+
+def ipc(*args):
+    return subprocess.run(["hyprctl", *args], check=True, capture_output=True,
+                          text=True, timeout=5).stdout
+
+
+def lid_closed():
+    states = list(Path("/proc/acpi/button/lid").glob("*/state"))
+    return any("closed" in p.read_text().lower() for p in states)
+
+
+def plan(monitors, closed):
+    internal = next((m for m in monitors if m["name"] == INTERNAL), None)
+    if internal is None:
+        return []
+    external = [m for m in monitors if m["name"] != INTERNAL
+                and not m["name"].startswith("HEADLESS")
+                and not m.get("disabled", False)
+                and m.get("mirrorOf", "none") in ("none", "", None)]
+    external.sort(key=lambda m: (m["name"] != "HDMI-A-1", m["name"]))
+    updates = []
+    if external:
+        screen = external[0]
+        if (screen["x"], screen["y"]) != (0, 0):
+            updates.append({"output": screen["name"], "position": "0x0"})
+        if closed:
+            if not internal.get("disabled", False):
+                updates.append({"output": INTERNAL, "disabled": True})
+            return updates
+        width = round(screen["width"] / screen.get("scale", 1))
+        height = round(screen["height"] / screen.get("scale", 1))
+        laptop_width = round((internal.get("width") or 1920) / (internal.get("scale") or 1))
+        x, y = max(0, (width - laptop_width) // 2), height
+    else:
+        x, y = 0, 0
+    if internal.get("disabled", False) or (internal["x"], internal["y"]) != (x, y):
+        updates.append({"output": INTERNAL, "disabled": False,
+                        "mode": "preferred", "scale": 1, "position": f"{x}x{y}"})
+    return updates
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--lid", choices=("open", "closed"))
+    parser.add_argument("--dry-run", action="store_true")
+    args = parser.parse_args()
+    lock_path = Path(os.environ["XDG_RUNTIME_DIR"]) / "hypr-display-layout.lock"
+    with lock_path.open("w") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        closed = args.lid == "closed" if args.lid else lid_closed()
+        updates = plan(json.loads(ipc("monitors", "all", "-j")), closed)
+        for update in updates:
+            if update.get("disabled"):
+                # Recheck immediately before disabling the laptop: unplugging
+                # the external screen must never leave the session black.
+                current = json.loads(ipc("monitors", "all", "-j"))
+                if not any(u.get("disabled") for u in plan(current, closed)):
+                    continue
+            print(json.dumps(update), flush=True)
+            if args.dry_run:
+                continue
+            fields = ", ".join(k + " = " + (str(v).lower() if isinstance(v, bool)
+                                else json.dumps(v)) for k, v in update.items())
+            ipc("eval", "hl.monitor({ " + fields + " })")
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except (OSError, ValueError, subprocess.SubprocessError, KeyError) as error:
+        raise SystemExit(f"display-layout: {error}")

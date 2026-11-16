@@ -1,0 +1,66 @@
+/* Text labels and centered workspaces inspired by m-vikanshu/nix-config.
+ * Local Rosé Pine design: square edges, 18px JetBrains, terminal opacity. */
+@import "./rose-pine.css";
+* {
+  font-family: "JetBrainsMono Nerd Font Mono", monospace;
+  font-size: 18px;
+  font-weight: normal;
+  min-height: 0;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+  box-shadow: none;
+  text-shadow: none;
+}
+window#waybar { background: alpha(@base, 0.86); color: @text; }
+.modules-left { padding-left: 12px; }
+.modules-right { padding-right: 12px; }
+#clock, #window, #cpu, #memory, #backlight, #pulseaudio,
+#bluetooth, #network, #battery, #custom-launcher, #custom-lock,
+#idle_inhibitor, #mpris, #tray {
+  margin: 6px 5px;
+  padding: 0 3px;
+  border-bottom: 1px solid alpha(@subtle, 0.3);
+}
+#clock { border-bottom-color: @foam; }
+#window { color: @subtle; border-bottom-color: @rose; }
+#cpu, #backlight { border-bottom-color: @gold; }
+#pulseaudio { border-bottom-color: @love; }
+#network { border-bottom-color: @foam; }
+#bluetooth, #battery { border-bottom-color: @iris; }
+#custom-launcher, #custom-lock, #idle_inhibitor { color: @subtle; }
+#custom-launcher:hover, #custom-lock:hover { color: @rose; }
+#idle_inhibitor.activated { color: @gold; }
+#workspaces button {
+  min-width: 26px;
+  padding: 0 5px;
+  margin: 6px 1px;
+  color: @subtle;
+  background: transparent;
+  border-bottom: 2px solid transparent;
+}
+#workspaces button.empty { color: @muted; }
+#workspaces button.active { color: @rose; border-bottom-color: @rose; }
+#workspaces button.urgent { color: @love; border-bottom-color: @love; }
+#workspaces button:hover { background: @overlay; color: @text; }
+#battery.warning { color: @gold; }
+#battery.critical:not(.charging) { color: @love; }
+#network.disconnected, #bluetooth.off, #bluetooth.disabled,
+#pulseaudio.muted { color: @muted; }
+window#waybar.empty #window { border: none; }
+tooltip, menu#waybar-controls-menu {
+  background: alpha(@base, 0.96);
+  color: @text;
+  border: 1px solid @highlightMed;
+  padding: 6px;
+}
+tooltip label { padding: 4px; color: @text; }
+menu#waybar-controls-menu menuitem { padding: 8px 12px; color: @text; }
+menu#waybar-controls-menu menuitem:hover { background: @overlay; color: @rose; }
+menu#waybar-controls-menu menuitem label { color: inherit; }
+menu#waybar-controls-menu menuitem.controls-title:disabled { color: @subtle; }
+menu#waybar-controls-menu separator { min-height: 1px; background: @highlightMed; margin: 5px; }
+
+#custom-weather { margin: 6px 5px; padding: 0 3px; color: @foam; border-bottom: 1px solid alpha(@foam, 0.5); }
+#custom-weather.stale, #custom-weather.unavailable { color: @subtle; }

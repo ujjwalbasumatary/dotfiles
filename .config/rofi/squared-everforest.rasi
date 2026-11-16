@@ -1,18 +1,18 @@
 /*******************************************************************************
- * ROFI SQUARED THEME USING THE EVERFOREST PALETTE 
- * User                 : LR-Tech               
+ * ROFI SQUARED THEME USING THE EVERFOREST PALETTE
+ * User                 : LR-Tech
  * Theme Repo           : https://github.com/lr-tech/rofi-themes-collection
  *******************************************************************************/
 
 * {
-    font:   "FiraCode Nerd Font Medium 12";
+    font:   "JetBrainsMono Nerd Font Mono 12";
 
-    bg0:     #b14591;
-    bg1:     #581845;
-    fg0:     #fbf1c7;
+    bg0:     #1e1e2e;
+    bg1:     #45475a;
+    fg0:     #cdd6f4;
 
-    accent-color:     #ebdbb2;
-    urgent-color:     #9d0006;
+    accent-color:     #89b4fa;
+    urgent-color:     #b4befe;
 
     background-color:   transparent;
     text-color:         @fg0;
@@ -30,7 +30,7 @@ window {
 }
 
 inputbar {
-    spacing:    8px; 
+    spacing:    8px;
     padding:    8px;
 
     background-color:   @bg1;
