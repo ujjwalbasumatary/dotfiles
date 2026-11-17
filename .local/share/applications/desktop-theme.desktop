@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Desktop Theme
+Comment=Switch between Rosé Pine and Gruvbox Muted
+Exec=/home/ujjwal/.local/bin/desktop-theme menu
+Icon=preferences-desktop-theme
+Terminal=false
+Categories=Settings;DesktopSettings;
+Keywords=theme;rose pine;gruvbox;appearance;

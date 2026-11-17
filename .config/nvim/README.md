@@ -1,10 +1,10 @@
 # Neovim for Julia, Python, LaTeX, and C/C++
 
 This is a standalone Neovim configuration, not a LazyVim installation.
-The appearance uses Rosé Pine main. Snacks supplies file search, the
+The appearance follows the desktop’s Rosé Pine or Gruvbox Muted profile. Snacks supplies file search, the
 file browser, Git views, terminals, diagnostic lists, and undo history.
 Yazi remains available on demand. Neo-tree and Undotree are disabled, not
-uninstalled. Conform handles formatting, and Rosé Pine supplies the colour theme.
+uninstalled. Conform handles formatting; the selected desktop profile supplies colours.
 
 Restart Neovim after changing its configuration or installing language tools.
 Automatic plugin-update checks are off; inspect and update deliberately with
@@ -12,11 +12,11 @@ Automatic plugin-update checks are off; inspect and update deliberately with
 
 ## Appearance
 
-Kitty uses Cascadia Mono at 18 pt with the Rosé Pine terminal palette and
+Kitty uses Cascadia Mono at 18 pt with the selected desktop palette and
 0.86 background opacity. Terminal Neovim inherits its font and transparency.
 JuliaMono remains available as a fallback for mathematical characters.
 
-Rosé Pine matches the desktop and terminal while the editor, inactive splits,
+Both palettes match the desktop and terminal while the editor, inactive splits,
 gutters, file browser, and ordinary floating windows use the terminal background.
 Selection, current-line, status-line, and completion-menu highlights remain
 visible. Completion menus and ordinary floating windows use square borders.
@@ -29,10 +29,17 @@ An empty end of a file has no decorative tilde markers.
 Diagnostic signs and underlines remain visible, but long messages are not
 printed beside the code. Use `Space le` for the current line's explanation or
 `Space sd` for the diagnostic list. No diagnostics are disabled or filtered.
-The official `rose-pine/neovim` theme is pinned in `lazy-lock.json`. Kanagawa
-and Catppuccin remain available on demand with `:colorscheme kanagawa-wave`
-and `:colorscheme catppuccin-mocha`. The status line follows the selected
-theme; restarting Neovim restores Rosé Pine main.
+The official `rose-pine/neovim` and `ellisonleao/gruvbox.nvim` themes are pinned
+in `lazy-lock.json`. Neovim reads `~/.config/desktop-themes/current/name` at
+startup and follows profile changes when it regains focus.
+`:DesktopThemeReload` reapplies the desktop profile immediately. Restart an
+editor already open during installation once to load this integration.
+
+Kanagawa and Catppuccin remain available with `:colorscheme kanagawa-wave` and
+`:colorscheme catppuccin-mocha`. Manual colourscheme choices survive refocus
+until the desktop profile changes; the status line follows the selected theme.
+`DESKTOP_THEME=rose-pine` or `DESKTOP_THEME=gruvbox` can override selection for
+an isolated preview without changing the desktop.
 
 ## Everyday keys
 

@@ -1,0 +1,9 @@
+{
+  "name": "Gruvbox Muted Square",
+  "gtk3": "Local CSS on built-in Adwaita dark widgets; palette from Ros\u00e9 Pine",
+  "gtk4_reference": "https://github.com/rose-pine/gtk/blob/598be13da94f7083ddfc65d3601690ce650ea244/gtk4/rose-pine.css",
+  "gtk4_adaptations": "Import built-in GTK4 dark widgets; square corners and local widget overrides",
+  "license": "Official GTK4 palette MIT: LICENSE.rose-pine; GTK base resources remain system installed",
+  "local_adaptation": "Existing RosePine-Square widget styling recoloured to Gruvbox Muted; geometry unchanged.",
+  "palette_reference": "https://github.com/suresh-meena/desktop-dotfiles/blob/2052e47ac129323be5cb37f85acbe05a17462bec/home/.config/waybar/style.css"
+}

@@ -1,16 +1,11 @@
-/* Rosé Pine launcher, scoped to Hyprland. */
+/* Shared square launcher, scoped to Hyprland. */
+@import "/home/ujjwal/.config/desktop-themes/current/rofi-colors.rasi"
 configuration {
     show-icons: true;
     icon-theme: "Papirus-Dark";
 }
 * {
     font: "CaskaydiaMono Nerd Font Mono 13";
-    background: #191724;
-    foreground: #e0def4;
-    accent: #c4a7e7;
-    muted: #6e6a86;
-    surface: #1f1d2e;
-    selection: #26233a;
     background-color: @background;
     text-color: @foreground;
     border-color: @muted;

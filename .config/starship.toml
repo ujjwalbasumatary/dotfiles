@@ -1,4 +1,4 @@
-# Compact Rosé Pine prompt: foreground colours only, no powerline blocks.
+# Compact themed prompt: foreground colours only, no powerline blocks.
 "$schema" = 'https://starship.rs/config-schema.json'
 
 format = """
@@ -304,3 +304,15 @@ lavender = "#c4a7e7"  # iris
 crust = "#191724"     # base
 
 # Rosé Pine roles used for the lightweight separators and duration text.
+
+# Gruvbox Muted shares the same prompt layout; desktop-theme selects this palette.
+[palettes.gruvbox_muted]
+subtle = "#a89984"
+muted = "#7c6f64"
+red = "#cc241d"
+peach = "#d65d0e"
+yellow = "#d79921"
+green = "#83a598"
+sapphire = "#d65d0e"
+lavender = "#b16286"
+crust = "#282828"

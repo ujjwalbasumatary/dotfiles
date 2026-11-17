@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=Gruvbox Muted Square
+Comment=Local square Gruvbox Muted GTK styling for Hyprland
+
+[X-GNOME-Metatheme]
+GtkTheme=Desktop-Square
+IconTheme=Papirus-Dark
+CursorTheme=Catppuccin-Macchiato-Rosewater-Cursors

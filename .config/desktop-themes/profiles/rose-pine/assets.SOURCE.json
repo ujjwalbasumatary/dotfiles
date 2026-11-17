@@ -1,0 +1,11 @@
+{
+  "profile": "Ros\u00e9 Pine",
+  "base": "Existing local Ros\u00e9 Pine desktop assets",
+  "palette_reference": "https://rosepinetheme.com/palette/",
+  "licenses": [
+    "LICENSE.kitty-rose-pine",
+    "gtk/LICENSE.rose-pine",
+    "icons/lucide/LICENSE"
+  ],
+  "changes": "Aesthetic palettes only; no font, shortcut, application or display settings."
+}

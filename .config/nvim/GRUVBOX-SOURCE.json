@@ -1,0 +1,6 @@
+{
+  "repository": "https://github.com/ellisonleao/gruvbox.nvim",
+  "commit": "48262cda6a8a921b159c8ec3e21b48ccd870b7b2",
+  "palette_reference": "https://github.com/suresh-meena/desktop-dotfiles",
+  "local_changes": "Muted palette roles, transparent normal/editor/floating backgrounds and existing completion/selection conventions. No editor shortcuts or behavior changes."
+}

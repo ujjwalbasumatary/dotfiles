@@ -1,0 +1,16 @@
+{
+  "": {
+    "background-color": "#282828",
+    "text-color": "#d5c4a1",
+    "border-color": "#665c54"
+  },
+  "[urgency=critical]": {
+    "border-color": "#cc241d"
+  },
+  "[app-name=desktop-feedback]": {
+    "background-color": "#282828f5",
+    "text-color": "#d5c4a1",
+    "border-color": "#a89984",
+    "progress-color": "over #b1628633"
+  }
+}

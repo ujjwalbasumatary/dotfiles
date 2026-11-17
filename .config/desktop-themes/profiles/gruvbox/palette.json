@@ -1,0 +1,18 @@
+{
+  "base": "282828",
+  "surface": "32302f",
+  "overlay": "3c3836",
+  "muted": "7c6f64",
+  "subtle": "a89984",
+  "text": "d5c4a1",
+  "love": "cc241d",
+  "gold": "d79921",
+  "rose": "d65d0e",
+  "pine": "458588",
+  "foam": "83a598",
+  "iris": "b16286",
+  "highlightLow": "32302f",
+  "highlightMed": "504945",
+  "highlightHigh": "665c54",
+  "inputText": "bdae93"
+}

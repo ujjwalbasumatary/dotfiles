@@ -1,0 +1,10 @@
+{
+  "rose-pine": {
+    "label": "Ros\u00e9 Pine",
+    "starship": "rose_pine"
+  },
+  "gruvbox": {
+    "label": "Gruvbox Muted",
+    "starship": "gruvbox_muted"
+  }
+}

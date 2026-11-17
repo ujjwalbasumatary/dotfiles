@@ -1,0 +1,27 @@
+/*
+* Variant: Gruvbox Muted (local adaptation)
+* Base palette aliases retained for the shared Waybar layout
+*/
+
+@define-color base            #282828;
+@define-color surface         #32302f;
+@define-color overlay         #3c3836;
+
+@define-color muted           #7c6f64;
+@define-color subtle          #a89984;
+@define-color text            #d5c4a1;
+
+@define-color love            #cc241d;
+@define-color gold            #d79921;
+@define-color rose            #d65d0e;
+@define-color pine            #458588;
+@define-color foam            #83a598;
+@define-color iris            #b16286;
+
+@define-color highlightLow    #32302f;
+@define-color highlightMed    #504945;
+@define-color highlightHigh   #665c54;
+
+/* Aliases used by upstream optional indicator styles. */
+@define-color background @base;
+@define-color transparent rgba(0, 0, 0, 0);

@@ -1,6 +1,6 @@
 /* Centered workspaces inspired by m-vikanshu/nix-config; Lucide SVG status icons.
- * Local Rosé Pine design: square edges, 18px Cascadia Mono, terminal opacity. */
-@import "./rose-pine.css";
+ * Shared dual-theme design: square edges, 18px Cascadia Mono, terminal opacity. */
+@import "../desktop-themes/current/waybar.css";
 * {
   font-family: "CaskaydiaMono Nerd Font Mono", monospace;
   font-size: 18px;

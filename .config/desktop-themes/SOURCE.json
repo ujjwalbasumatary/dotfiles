@@ -1,0 +1,8 @@
+{
+  "design_reference": "https://github.com/suresh-meena/desktop-dotfiles/tree/2052e47ac129323be5cb37f85acbe05a17462bec",
+  "adaptation": "Muted Gruvbox palette adapted to the existing square Rose Pine layout, Cascadia font, Lucide icons and application choices. No upstream installer or machine configuration imported.",
+  "palettes": [
+    "Rose Pine main",
+    "Gruvbox dark, muted accents"
+  ]
+}

@@ -1,0 +1,79 @@
+/* Local square Rosé Pine adaptation, retaining GTK's native widget geometry. */
+@import url("resource:///org/gtk/libgtk/theme/Adwaita/gtk-contained-dark.css");
+@define-color theme_bg_color #191724;
+@define-color theme_fg_color #e0def4;
+@define-color theme_base_color #191724;
+@define-color theme_text_color #e0def4;
+@define-color theme_selected_bg_color #403d52;
+@define-color theme_selected_fg_color #e0def4;
+@define-color insensitive_fg_color #908caa;
+@define-color insensitive_bg_color #1f1d2e;
+@define-color borders #403d52;
+@define-color warning_color #f6c177;
+@define-color error_color #eb6f92;
+@define-color success_color #9ccfd8;
+* { border-radius: 0; }
+window, .background, dialog { background-color: #191724; color: #e0def4; }
+headerbar, toolbar, .sidebar, .view, treeview.view, textview text {
+  background-color: #191724; color: #e0def4;
+}
+button, entry, spinbutton, combobox, notebook header, menu, popover, .context-menu {
+  background-image: none; background-color: #1f1d2e; color: #e0def4;
+  border-color: #403d52; box-shadow: none;
+}
+button:hover, row:hover { background-color: #26233a; }
+button:checked, button:active, row:selected, .view:selected, selection {
+  background-color: #403d52; color: #e0def4;
+}
+entry:focus, button:focus { border-color: #c4a7e7; }
+button.suggested-action, switch:checked, scale highlight, progressbar progress {
+  background-image: none; background-color: #c4a7e7; color: #191724;
+}
+button.destructive-action { background-image: none; background-color: #eb6f92; color: #191724; }
+separator { background-color: #403d52; }
+*:disabled { color: #908caa; }
+tooltip { background-color: #26233a; color: #e0def4; border: 1px solid #403d52; }
+
+/* Override Adwaita's state-specific selectors, not just base node styles. */
+.background headerbar, .background headerbar:backdrop,
+.background .titlebar, .background .titlebar:backdrop,
+.background toolbar, .background toolbar:backdrop {
+  background-image: none; background-color: #1f1d2e; color: #e0def4;
+  border-color: #403d52; box-shadow: none; border-radius: 0;
+}
+.background treeview.view:selected,
+.background treeview.view:selected:focus,
+.background treeview.view:selected:backdrop,
+.background treeview.view:selected:backdrop:focus,
+.background .view:selected,
+.background .view:selected:focus,
+.background .view:selected:backdrop,
+.background row:selected,
+.background row:selected:focus,
+.background row:selected:backdrop {
+  background-image: none; background-color: #403d52; color: #e0def4;
+  border-radius: 0; border-color: #403d52;
+}
+.background treeview.view header button,
+.background treeview.view header button:backdrop {
+  background-image: none; background-color: #26233a; color: #908caa;
+  border-color: #403d52; box-shadow: none;
+}
+/* Repeated class raises specificity above linked first/last-child variants. */
+.background.background.background button,
+.background.background.background entry,
+.background.background.background spinbutton,
+.background.background.background combobox,
+.background.background.background headerbar,
+.background.background.background popover,
+.background.background.background menu {
+  border-radius: 0; -gtk-outline-radius: 0;
+  background-image: none; box-shadow: none;
+}
+.background button:backdrop, .background entry:backdrop {
+  background-color: #1f1d2e; color: #908caa; border-color: #403d52;
+}
+.background button:hover { background-image: none; background-color: #26233a; }
+.background button:checked, .background button:active {
+  background-image: none; background-color: #403d52; color: #e0def4;
+}

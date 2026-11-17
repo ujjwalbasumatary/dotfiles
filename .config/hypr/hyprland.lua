@@ -1,6 +1,7 @@
--- Rosé Pine Hyprland configuration for 0.57.2, paired with a continuous text Waybar.
+-- Shared Hyprland configuration for 0.57.2; colour profiles are selected separately.
 -- Reference: https://github.com/hyprwm/Hyprland/blob/v0.57.2/example/hyprland.lua
 -- Deployed from the saved bundle in ~/.local/share/hyprland-prepared/.
+local desktop_theme = dofile("/home/ujjwal/.config/desktop-themes/current/hyprland.lua")
 local rofi_theme = "/home/ujjwal/.config/hypr/rofi.rasi"
 -- While the launcher has focus, Rofi handles the same keys as cancel actions.
 local launcher = "rofi -no-config -show drun -show-icons -icon-theme Papirus-Dark -global-kb "
@@ -8,7 +9,7 @@ local launcher = "rofi -no-config -show drun -show-icons -icon-theme Papirus-Dar
     .. "-kb-remove-char-forward Delete -theme " .. rofi_theme
 
 hl.monitor({ output = "", mode = "preferred", position = "auto", scale = 1 })
-hl.env("GTK_THEME", "RosePine-Square")
+hl.env("GTK_THEME", "Desktop-Square")
 -- Qt uses the same GTK palette and dialogs only within this session.
 hl.env("QT_QPA_PLATFORMTHEME", "gtk3")
 hl.env("XCURSOR_THEME", "Catppuccin-Macchiato-Rosewater-Cursors")
@@ -21,8 +22,8 @@ hl.config({
         gaps_out = 12,
         border_size = 2,
         col = {
-            active_border = { colors = { "rgba(c4a7e780)" }, angle = 0 },
-            inactive_border = "rgba(26233aff)",
+            active_border = { colors = { desktop_theme.active_border }, angle = 0 },
+            inactive_border = desktop_theme.inactive_border,
         },
         resize_on_border = true,
         layout = "dwindle",
@@ -31,13 +32,13 @@ hl.config({
         rounding = 0,
         active_opacity = 1.0,
         inactive_opacity = 1.0,
-        shadow = { enabled = true, range = 14, render_power = 3, color = "rgba(19172488)" },
+        shadow = { enabled = true, range = 14, render_power = 3, color = desktop_theme.shadow },
         blur = { enabled = true, size = 3, passes = 2 },
     },
     animations = { enabled = true },
     dwindle = { preserve_split = true },
     input = { kb_layout = "us", follow_mouse = 1, touchpad = { natural_scroll = true } },
-    misc = { disable_hyprland_logo = true, disable_splash_rendering = true, background_color = "rgb(191724)" },
+    misc = { disable_hyprland_logo = true, disable_splash_rendering = true, background_color = desktop_theme.background },
 })
 
 -- Short, restrained transitions; application opacity comes from Kitty itself.

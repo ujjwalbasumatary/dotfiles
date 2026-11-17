@@ -1,0 +1,5 @@
+{
+  "project": "https://github.com/lucide-icons/lucide",
+  "commit": "333574bdecb43e7cb4a4bb1cd21d1367cfbbee2c",
+  "changes": "SVG strokes recoloured to Gruvbox Muted; geometry unchanged. Weather PNGs rendered from matching SVGs at 128px."
+}
